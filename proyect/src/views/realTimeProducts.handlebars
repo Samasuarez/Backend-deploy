@@ -1,0 +1,40 @@
+<h1>Productos en Tiempo Real</h1>
+
+<div class="products-container">
+  {{#each products}}
+    <div class="product-card">
+      <img src="{{thumbnail}}" alt="{{this.title}} Thumbnail" />
+      <h2>{{this.title}}</h2>
+      <p>Precio: ${{this.price}}</p>
+      <p>Stock : {{this.stock}}</p>
+      <p>description: {{this.description}}</p>
+      <p>Category: {{this.category}}</p>
+    </div>
+  {{/each}}
+</div>
+
+<h2>Agregar Nuevo Producto</h2>
+  <form id="new-product-form" method="post">
+    <label for="title">Título:</label>
+    <input type="text" id="title" name="title" required />
+
+    <label for="price">Precio:</label>
+    <input type="number" id="price" name="price" required />
+
+    <label for="thumbnail">URL Miniatura:</label>
+    <input type="text" id="thumbnail" name="thumbnail" required />
+
+    <label for="stock">Stock</label>
+    <input type="number" id="stock" name="stock" required />
+
+    <label for="description">Descripción:</label>
+    <input type="text" id="description" name="description" required />
+
+    <label for="category">Categoría:</label>
+    <input type="text" id="category" name="category" required />
+
+   <label for="code">Code:</label>
+    <input type="text" id="code" name="code" required />
+
+    <button type="submit">Agregar Producto</button>
+  </form>
