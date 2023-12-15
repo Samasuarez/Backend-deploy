@@ -1,5 +1,5 @@
 // import "dotenv/config";
-import cors from "cors";
+// import cors from "cors";
 import express from "express";
 import compression from "express-compression";
 import router from "./routes/main.routes.js";
