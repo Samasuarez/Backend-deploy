@@ -1,8 +1,10 @@
 import { Router } from "express";
 import passport from "passport";
-import { postUser } from "../controllers/users.controlers.js";
+import { passportError, authorization} from "../utils/messagesError.js";
+import { postUser, getUsers } from "../controllers/users.controlers.js";
 const routerUser = Router();
 
+routerUser.get('/', passportError("jwt"), authorization("admin", "admin"), getUsers)
 routerUser.post("/", passport.authenticate("register"),postUser )
 
 export default routerUser;

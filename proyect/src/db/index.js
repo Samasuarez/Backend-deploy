@@ -3,7 +3,7 @@ import MongoStore from "connect-mongo";
 
 const mongoConnect = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URL, {
+    await mongoose.connect("mongodb+srv://sama:suarez@cluster0.iy6wjg4.mongodb.net/your-database-name", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -14,8 +14,8 @@ const mongoConnect = async () => {
 };
 
 const sessionStore = new MongoStore({
-  mongoUrl: process.env.MONGO_URL,
+  mongoUrl: "mongodb+srv://sama:suarez@cluster0.iy6wjg4.mongodb.net/your-database-name",
   ttl: 60,
 });
 
-export { mongoConnect, sessionStore };
+export { mongoConnect, sessionStore};

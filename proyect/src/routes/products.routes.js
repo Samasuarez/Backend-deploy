@@ -5,9 +5,9 @@ const routerProduct = Router();
 
 routerProduct.get("/", getProducts);
 routerProduct.get('/:id',getProductsById )
-routerProduct.post("/",passportError("jwt"), authorization("user"), createProducts)
-routerProduct.put("/:id",passportError("jwt"), authorization("Admin"),  putProductsById)
-routerProduct.delete("/:id",passportError("jwt"), authorization("Admin"), deleteProduct)
+routerProduct.post("/",passportError("jwt"), authorization(["admin", "usuario"]), createProducts)
+routerProduct.put("/:id",passportError("jwt"), authorization("admin", "usuario"),  putProductsById)
+routerProduct.delete("/:id",passportError("jwt"), authorization("admin", "admin"), deleteProduct)
 
 
 export default routerProduct;

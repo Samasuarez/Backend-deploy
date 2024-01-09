@@ -1,34 +1,20 @@
-// import "dotenv/config";
-// import cors from "cors";
 import express from "express";
 import compression from "express-compression";
+import passport from "passport";
 import router from "./routes/main.routes.js";
 import session from "express-session";
-import passport from "passport";
 import { Server } from "socket.io";
 import { engine } from "express-handlebars";
 import { __dirname } from "./path.js";
-import { mongoConnect, sessionStore } from "./db/index.js";
+import { mongoConnect } from "./db/index.js";
 import path from "path";
 import cookieParser from "cookie-parser";
 import initializePassport from "./config/passport.js";
-
-// const whiteList = ["http://localhost:5173"];
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whiteList.indexOf(origin) != -1 || !origin) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Acceso denegado"));
-//     }
-//   },
-// };
 
 const app = express();
 const port = 4000;
 
 app.use(compression());
-// app.use(cors(corsOptions));
 
 mongoConnect();
 
@@ -37,25 +23,27 @@ app.set("view engine", "handlebars");
 app.set("views", path.resolve(__dirname, "./views/"));
 app.use(express.json());
 app.use(cookieParser());
-
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "mi-session-secreta",
     resave: false,
     saveUninitialized: true,
-    store: sessionStore,
+    cookie: {
+      secure: true,
+      httpOnly: true,
+    },
   })
 );
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/static", (req, res) => {
-  res.render("home");
-});
 app.use(passport.initialize());
 app.use(passport.session());
 initializePassport();
+app.get("/home", (req, res) => {
+  res.render("home");
+});
 
 app.use("/", router);
 app.use((err, req, res, next) => {

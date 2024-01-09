@@ -19,19 +19,20 @@ export const passportError = (strategy) => {
 }
 
 
-export const authorization = (rol) => {
-
-    return async (req, res, next) => {
-       
-        if (!req.user) {
-            return res.status(401).send({ error: 'User no autorizado' })
+export const authorization = (requiredRole) => {
+    return (req, res, next) => {
+      try {
+        const userRole = req.user.rol;
+  
+        if (userRole === requiredRole || userRole === 'admin') {
+        
+          return next();
+        } else {
+          return res.status(403).send({ mensaje: "Acceso no autorizado" });
         }
-
-        if (req.user.user.rol != rol) {
-            return res.status(403).send({ error: 'User no tiene los privilegios necesarios' })
-        }
-
-        next()
-    }
-
-}
+      } catch (error) {
+        return res.status(500).send({ mensaje: `Error en autorización: ${error.message}` });
+      }
+    };
+  };
+  

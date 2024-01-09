@@ -15,6 +15,5 @@ router.use("/api/carts", routerCart);
 router.use("/api/session", routerSession);
 router.use("/api/logger", loggerRoutes)
 router.use("/api/recoveryPassword", recovPassRoter)
-// router.use("/realtimeproducts", routerRealTime);
 
 export default router;
